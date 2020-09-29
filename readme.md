@@ -1,2 +1,1 @@
-![gui](https://user-images.githubusercontent.com/55306843/94595819-494c1580-0259-11eb-87d7-beecb2690bc5.png)
-
+![pid](https://user-images.githubusercontent.com/55306843/94596078-a8aa2580-0259-11eb-91b0-827ec1b12d73.png)
