@@ -1,3 +1,5 @@
+/* Copyright (C) 2020 David Brunecz. Subject to GPL 2.0 */
+
 
 #ifndef __COMMON_H__
 #define __COMMON_H__
