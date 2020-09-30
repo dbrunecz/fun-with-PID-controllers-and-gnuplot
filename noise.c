@@ -23,6 +23,7 @@ float frand(float min, float max)
 	return min + d;
 }
 
+/* derived from 'Numerical Recipes in C' 2nd Ed. */
 float gaussian_noise(void)
 {
 	static int n2_cached = 0;
