@@ -3,6 +3,8 @@
 #include <math.h>
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
+
+/* derived from 'Numerical Recipes in C' 2nd Ed. */
 void four1(float data[], unsigned long nn, int isign)
 {
 	unsigned long n, mmax, m, j, istep, i;
