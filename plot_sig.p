@@ -21,7 +21,8 @@ set grid back ls 6
 set border back ls 6
 
 plot \
-DATFILE u 1:2 w lines ls 4
+DATFILE u 1:2 w lines ls 4 \
+, DATFILE u 1:3 w lines ls 5
 
 # pause -1
 

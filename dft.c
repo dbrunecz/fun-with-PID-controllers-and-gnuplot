@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	unsigned int i, samplerate, duration, samplecount;
-	FLOAT *tre, *tim;
+	FLOAT *re, *tre, *tim;
 	FLOAT *fre, *fim;
 	FLOAT t, dt;
 
@@ -164,6 +164,7 @@ int main(int argc, char *argv[])
 
 	samplecount = samplerate * duration;
 
+	re = malloc(sizeof(*re) * samplecount);
 	tre = malloc(sizeof(*tre) * samplecount);
 	tim = malloc(sizeof(*tim) * samplecount);
 	fre = malloc(sizeof(*fre) * samplecount);
@@ -185,6 +186,7 @@ int main(int argc, char *argv[])
 #else
 		tre[i] += 1.0f * SIN(2 * PI * 1.0f * t + 0.0f);
 #endif
+		re[i] = tre[i];
 		//printf("%4.3f % 4.3f\n", t, tre[i]);
 	}
 	memset(tim, 0, sizeof(*tim) * samplecount);
@@ -196,9 +198,8 @@ int main(int argc, char *argv[])
 	complex_idft(samplecount, tre, tim, fre, fim);
 	for (i = 0, t = 0.0f; i < samplecount; i++, t += dt)
 		//printf("%4.3f % 4.3f\n", i * dt, tre[i]);
-		printf("%4.3f % 4.3f\n",
-			i * dt,
-			tre[i]);
+		printf("%4.3f % f % f\n",
+			i * dt, re[i], tre[i]);
 			//0.5 * pow(tre[i] * tre[i] + tim[i] * tim[i], 0.5));
 #else
 	for (i = 0; i < samplecount / 2; i++)
