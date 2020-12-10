@@ -10,10 +10,6 @@
 
 #include "common.h"
 
-void ifft(unsigned int cnt, FLOAT * tre, FLOAT * tim, FLOAT * fre, FLOAT * fim)
-{
-}
-
 static int validate_power_of_2_size(unsigned int size)
 {
 	int m;
@@ -85,7 +81,7 @@ void fft(unsigned int cnt, FLOAT * tre, FLOAT * tim)
 
 				if (idx1 >= cnt || idx2 >= cnt) {
 					DBG();
-					for (;;) ;
+					exit(-1);
 				}
 				tr = tre[idx1] * ur - tim[idx1] * ui;
 				ti = tre[idx1] * ui + tim[idx1] * ur;
@@ -100,6 +96,29 @@ void fft(unsigned int cnt, FLOAT * tre, FLOAT * tim)
 			ur = tr * re - ui * im;
 			ui = tr * im + ui * re;
 		}
+	}
+}
+
+//void ifft(unsigned int cnt, FLOAT * tre, FLOAT * tim, FLOAT * fre, FLOAT * fim)
+void ifft(unsigned int cnt, FLOAT *re, FLOAT *im)
+{
+	int m, i;
+
+	m = validate_power_of_2_size(cnt);
+	if (m < 0) {
+		DBG();
+		return;
+	}
+
+	for (i = 0; i < cnt; i++)
+		im[i] *= -1.0;
+
+	fft(cnt, re, im);
+
+	for (i = 0; i < cnt; i++) {
+		re[i] /= cnt;
+		im[i] /= cnt;
+		im[i] *= -1.0;
 	}
 }
 
@@ -128,18 +147,24 @@ int main(int argc, char *argv[])
 
 	for (i = 0, t = 0.0f; i < samplecount; i++, t += dt) {
 		re[i] = 4.0f;
-		re[i] += 7.0f * SIN(2 * PI * 30.3f * t + 0.0f);
-		re[i] += 1.0f * SIN(2 * PI * 5.0f * t + 0.0f);
-		re[i] += 5.0f * COS(2 * PI * 70.0f * t + 0.0f);
+		//re[i] += 3.0f * SIN(2 * PI * 0.25f * t + 0.0f);
+		re[i] += 2.0f * SIN(2 * PI * 0.5f * t + 0.0f);
+		//re[i] += 4.0f * COS(2 * PI * 1.0f * t + 0.0f);
 		//printf("%4.3f % 4.3f\n", t, tre[i]);
 	}
 	memset(im, 0, sizeof(*im) * samplecount);
 
+#if 0
+	for (i = 0; i < samplecount; i++)
+		printf("%2.4f %2.4f\n", i * dt, re[i]);
+#else
 	fft(samplecount, re, im);
-
 	for (i = 0; i < samplecount / 2; i++)
-		printf("%f %f\n", (FLOAT) i / (FLOAT) duration,
+		printf("%f %f\n", i * dt,
 		       0.5f * POW(re[i] * re[i] + im[i] * im[i], 0.5f));
+#endif
+	//ifft(samplecount, re, im);
+
 	//for (i = 0; i < samplecount / 2; i++)
 	//    printf("%f %f\n", (FLOAT)i / (FLOAT)duration,
 	//            0.5f * POW(re[i] * re[i] + im[i] * im[i], 0.5f));

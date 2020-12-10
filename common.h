@@ -72,7 +72,8 @@ struct filter {
 
 FLOAT filter(struct filter *f, FLOAT x);
 
-void ifft(unsigned int cnt, FLOAT *tre, FLOAT *tim, FLOAT *fre, FLOAT *fim);
+//void ifft(unsigned int cnt, FLOAT *tre, FLOAT *tim, FLOAT *fre, FLOAT *fim);
+void ifft(unsigned int cnt, FLOAT *re, FLOAT *im);
 void fft(unsigned int cnt, FLOAT *tre, FLOAT *tim);
 
 void idft(FLOAT *in, unsigned int cnt, FLOAT *re, FLOAT *im);
